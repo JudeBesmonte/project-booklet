@@ -18,39 +18,27 @@ use Inertia\Inertia;
 
 Route::middleware('auth', 'verified')->group(function () {
   Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Browse', [
       'laravelVersion' => Application::VERSION,
       'phpVersion' => PHP_VERSION,
     ]);
   });
 
-  Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-  })->middleware(['auth', 'verified'])->name('dashboard');
+  Route::get('/uploads', function () {
+    return Inertia::render('Uploads');
+  })->name('uploads');
 
-  // PROFILE
+  Route::get('/uploads/book', function () {
+    return Inertia::render('Uploads/AddBook');
+  })->name('uploads.addbook');
+
+  Route::get('/favorites', function () {
+    return Inertia::render('Favorites');
+  })->name('favorites');
+
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Route::get('/', function () {
-//   return Inertia::render('Welcome', [
-//     'canSignin' => Route::has('signin'),
-//     'canSignup' => Route::has('signup'),
-//     'laravelVersion' => Application::VERSION,
-//     'phpVersion' => PHP_VERSION,
-//   ]);
-// });
-
-// Route::get('/dashboard', function () {
-//   return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 require __DIR__ . '/auth.php';
